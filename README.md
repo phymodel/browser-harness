@@ -36,3 +36,24 @@ src/session.ts   every command: snapshot/find/act/tabs/telemetry/window
 src/pw.ts        playwright resolution
 scripts/         setup · smoke · browserctl · daemon
 ```
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
+
+## Acceptable use & disclaimer
+
+browser-harness is a **general-purpose browser automation harness**. It drives its own Chromium
+instance and is **not** a scraping-evasion, anti-bot or fingerprint-spoofing tool.
+
+- **No anti-detection features, by design.** The harness does not spoof fingerprints, solve or
+  bypass CAPTCHAs, or circumvent access controls. Such features will not be added — see
+  "边界与非目标 / Non-goals" in [HARNESS.md](./HARNESS.md).
+- **You are responsible for how you use it.** Automated access may be restricted by the terms of
+  service of the sites you visit, by `robots.txt`, or by law. Comply with them. Do not use this
+  project to access accounts or data you are not authorised to access, to attack or overload a
+  service, or for any unlawful purpose.
+- **No warranty.** Provided "AS IS", without warranty of any kind; the authors are not liable for
+  any damage or loss arising from its use.
+- **Not affiliated** with any website, service or vendor; product names and trademarks mentioned
+  in the documentation belong to their respective owners.

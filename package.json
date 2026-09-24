@@ -2,6 +2,7 @@
   "name": "browser-harness",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Self-contained browser harness: a built-in Chromium window (own profile, no permission over the device browser), accessibility-tree snapshots with stable refs, ref-based actions, local daemon + CLI.",
   "engines": {
