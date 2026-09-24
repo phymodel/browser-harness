@@ -1,0 +1,28 @@
+{
+  "name": "browser-harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-contained browser harness: a built-in Chromium window (own profile, no permission over the device browser), accessibility-tree snapshots with stable refs, ref-based actions, local daemon + CLI.",
+  "engines": {
+    "node": ">=22.6"
+  },
+  "bin": {
+    "browserctl": "scripts/browserctl"
+  },
+  "scripts": {
+    "setup": "sh scripts/setup.sh",
+    "smoke": "sh scripts/smoke.sh",
+    "start": "node src/cli.ts start",
+    "stop": "node src/cli.ts stop",
+    "status": "node src/cli.ts status"
+  },
+  "peerDependencies": {
+    "playwright": ">=1.49"
+  },
+  "peerDependenciesMeta": {
+    "playwright": {
+      "optional": true
+    }
+  }
+}

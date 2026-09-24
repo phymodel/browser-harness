@@ -1,0 +1,8 @@
+# runtime state (daemon.json / token / logs / screenshots / downloads)
+.state/
+# built-in browser profile (independent user-data-dir)
+.profile/
+# local playwright install, if someone runs `npm i playwright` in-repo
+node_modules/
+npm-debug.log*
+*.DS_Store

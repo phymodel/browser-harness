@@ -1,0 +1,4 @@
+#!/bin/sh
+# browserctl wrapper — works from any cwd, no install step needed.
+DIR=$(cd "$(dirname "$0")/.." && pwd)
+exec node "$DIR/src/cli.ts" "$@"

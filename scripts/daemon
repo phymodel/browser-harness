@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run the daemon in the foreground (usually you want `browserctl start` instead).
+DIR=$(cd "$(dirname "$0")/.." && pwd)
+exec node "$DIR/src/daemon.ts" "$@"
