@@ -136,7 +136,8 @@ $ browserctl type e23 "Playwright (software)" --submit
 
 1. `setup.sh` → `doctor`：确认 `playwrightOk` 与 `chromiumInstalled`。
 2. `browserctl start <url>`：一条命令拉起窗口；已运行则复用（`--restart` 才重启）。
-3. **每次页面变化后先 `snapshot`**（或 `snapshot --grep=关键词` 压行数），拿 `[ref=eN]`。
+3. **每次页面变化后先 `snapshot`**（或 `snapshot --grep=关键词` 压行数），拿 `[ref=eN]`——
+   ref 原样复制，可能是 `e12`，也可能是界面渲染在帧里时的 `f2e34`。
 4. 动作用 ref：`click e8` / `type e4 "文本" --submit`；一次动作后加 `--snapshot` 可省一次往返。
 5. 结果校验优先用低成本通道：`text`（正文）、`logs --errors`（前端报错）、`requests --failed`（接口失败）；
    需要人眼确认时再 `screenshot`（模型看不到像素）。

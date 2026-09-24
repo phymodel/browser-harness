@@ -24,7 +24,7 @@
     - button "提交" [ref=e8]
   - generic [ref=e9]: "-"
 [STATS] lines=18/18 refs=9 truncated=no 41ms
-[HINT] act with [ref=eN] (browserctl click e12 / type e4 "text"). Refs are stable within a document; re-snapshot after navigation or when a ref goes stale.
+[HINT] act with the EXACT ref token printed above (e12, or f2e34 when the app renders inside a frame). Refs are stable inside one document; a new document re-issues them, so re-snapshot instead of reusing an old ref.
 ```
 
 要点：
@@ -54,7 +54,10 @@ browserctl snapshot --json | jq '.slots[] | select(.ref)'
 
 1. **作用域**：ref 由 Playwright 的 AI 版 aria snapshot 发放，**在同一 document 内稳定**——连续两次 `snapshot`
    给同一元素发同一个 `eN`；新出现的元素拿新号（不是每次都从 e1 重排）。
-2. **跨帧**：iframe 内的元素带帧前缀，如 `f1e2`。`click f1e2` 直接可用（Playwright 会进帧）。
+2. **跨帧**：当页面把界面渲染在 iframe / 帧里时，ref 会带帧前缀，如 `f2e34`；主文档里的元素不带前缀。
+   两种形态都直接可用（`click f2e34`），harness 内部走的是 `aria-ref` 引擎，会自己进帧。
+   ⚠️ **不要手写 ref、也不要按 `eN` 的规律猜**：前缀编号会随文档重建而增长（同一个应用从 f1e34 变成 f2e34），
+   唯一正确的做法是从最近一次 `snapshot` / `find` 的输出里原样复制那个 token。
 3. **失效**：导航、`innerHTML` 重写、元素被移除后，旧 ref 不再指向该元素。此时 harness **不会**兜底猜测：
    - 解析阶段找不到 → `E_STALE_REF`（提示重新 `snapshot`）；
    - 元素存在但动作失败 → `E_ACTION_REF`。

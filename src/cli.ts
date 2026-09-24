@@ -415,6 +415,7 @@ async function cmdStart(pos: string[], flags: Flags): Promise<void> {
   out(`✓ built-in browser window ready${last.health.headless ? ' (headless)' : ''}`);
   out(`  pid ${last.info.pid}  port ${last.info.port}  ${last.health.pages} tab(s)`);
   out(`  profile ${last.info.profile ?? P.profileDir()}`);
+  if (last.health.lastError) out(`  ⚠ ${last.health.lastError}`);
   if (!last.health.headless) out('  the window is a dedicated Chromium profile — log in there by hand if a site needs it');
   if (flags.snapshot !== false) out('  next: browserctl snapshot');
 }

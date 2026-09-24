@@ -135,6 +135,7 @@ export async function main(argv: string[] = []): Promise<void> {
             profile: P.profileDir(),
             headless: session.headless,
             pages,
+            lastError: session.lastError,
             uptimeMs: Date.now() - startedAt,
           });
           return;

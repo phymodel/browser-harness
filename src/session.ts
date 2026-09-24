@@ -208,7 +208,16 @@ export class BrowserSession {
     if (this.context.pages().length === 0) await this.context.newPage();
     await this.activePage();
     log(`browser launched headless=${this.headless} profile=${P.profileDir()}`);
-    if (url) await this.cmdGoto({ url });
+    // A failing startup URL must not take the daemon down: the window is up,
+    // the caller can navigate later with `browserctl goto <url>`.
+    if (url) {
+      try {
+        await this.cmdGoto({ url });
+      } catch (e) {
+        this.lastError = `startup navigation to ${url} failed: ${(e as Error).message.split('\n')[0]}`;
+        log(this.lastError);
+      }
+    }
   }
 
   async shutdown(): Promise<void> {
@@ -521,7 +530,8 @@ export class BrowserSession {
       `[STATS] lines=${shown.length}/${allLines.length} refs=${refs.length} truncated=${truncated ? 'yes' : 'no'} ${Date.now() - t0}ms` +
       (a.grep ? ` grep=${JSON.stringify(String(a.grep))}` : '');
     const hint =
-      '[HINT] act with [ref=eN] (browserctl click e12 / type e4 "text"). Refs are stable within a document; re-snapshot after navigation or when a ref goes stale.';
+      '[HINT] act with the EXACT ref token printed above (e12, or f2e34 when the app renders inside a frame). ' +
+      'Refs are stable inside one document; a new document re-issues them, so re-snapshot instead of reusing an old ref.';
 
     if (a.json) {
       let jsonTree: unknown = null;
